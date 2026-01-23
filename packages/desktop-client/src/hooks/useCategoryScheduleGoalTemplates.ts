@@ -6,8 +6,8 @@ import { useCachedSchedules } from './useCachedSchedules';
 import { useFeatureFlag } from './useFeatureFlag';
 
 import type {
-  ScheduleStatuses,
-  ScheduleStatusLabels,
+  ScheduleStatusLabelMap,
+  ScheduleStatusMap,
 } from '@desktop-client/schedules';
 
 type ScheduleGoalDefinition = {
@@ -21,8 +21,8 @@ type UseCategoryScheduleGoalTemplatesProps = {
 
 type UseCategoryScheduleGoalTemplatesResult = {
   schedules: ScheduleEntity[];
-  statuses: ScheduleStatuses;
-  statusLabels: ScheduleStatusLabels;
+  statuses: ScheduleStatusMap;
+  statusLabels: ScheduleStatusLabelMap;
 };
 
 export function useCategoryScheduleGoalTemplates({
@@ -32,8 +32,8 @@ export function useCategoryScheduleGoalTemplates({
   const {
     data: {
       schedules: allSchedules,
-      statuses: allStatuses,
-      labels: allStatusLabels,
+      scheduleStatusMap: allStatuses,
+      scheduleStatusLabelMap: allStatusLabels,
     },
   } = useCachedSchedules();
 

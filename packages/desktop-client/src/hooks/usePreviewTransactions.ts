@@ -19,7 +19,7 @@ import { useCachedSchedules } from './useCachedSchedules';
 import { useSyncedPref } from './useSyncedPref';
 import { calculateRunningBalancesBottomUp } from './useTransactions';
 
-import type { ScheduleStatuses } from '@desktop-client/schedules';
+import type { ScheduleStatusMap } from '@desktop-client/schedules';
 
 type UsePreviewTransactionsProps = {
   filter?: (schedule: ScheduleEntity) => boolean;
@@ -53,7 +53,7 @@ export function usePreviewTransactions({
   const {
     isFetching: isSchedulesLoading,
     error: scheduleQueryError,
-    data: { schedules, statuses },
+    data: { schedules, scheduleStatusMap },
   } = useCachedSchedules();
   const [isLoading, setIsLoading] = useState(isSchedulesLoading);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -75,7 +75,7 @@ export function usePreviewTransactions({
     }
 
     const schedulesForPreview = schedules
-      .filter(s => isForPreview(s, statuses))
+      .filter(s => isForPreview(s, scheduleStatusMap))
       .filter(filter ? filter : () => true);
 
     const today = d.startOfDay(parseDate(currentDay()));
@@ -90,7 +90,7 @@ export function usePreviewTransactions({
           schedule._conditions,
         );
 
-        const status = statuses.get(schedule.id);
+        const status = scheduleStatusMap.get(schedule.id);
         const isRecurring = scheduleIsRecurring(dateConditions);
 
         const dates: string[] = [schedule.next_date];
@@ -144,7 +144,13 @@ export function usePreviewTransactions({
           parseDate(b.date).getTime() - parseDate(a.date).getTime() ||
           a.amount - b.amount,
       );
-  }, [filter, isSchedulesLoading, schedules, statuses, upcomingLength]);
+  }, [
+    filter,
+    isSchedulesLoading,
+    schedules,
+    scheduleStatusMap,
+    upcomingLength,
+  ]);
 
   useEffect(() => {
     let isUnmounted = false;
@@ -169,7 +175,10 @@ export function usePreviewTransactions({
         if (!isUnmounted) {
           const withDefaults = newTrans.map(t => ({
             ...t,
-            category: t.schedule != null ? statuses.get(t.schedule) : undefined,
+            category:
+              t.schedule != null
+                ? scheduleStatusMap.get(t.schedule)
+                : undefined,
             schedule: t.schedule,
             subtransactions: t.subtransactions?.map(
               (st: TransactionEntity) => ({
@@ -211,7 +220,7 @@ export function usePreviewTransactions({
     return () => {
       isUnmounted = true;
     };
-  }, [scheduleTransactions, schedules, statuses, upcomingLength]);
+  }, [scheduleTransactions, schedules, scheduleStatusMap, upcomingLength]);
 
   const returnError = error || scheduleQueryError;
   return {
@@ -222,8 +231,11 @@ export function usePreviewTransactions({
   };
 }
 
-function isForPreview(schedule: ScheduleEntity, statuses: ScheduleStatuses) {
-  const status = statuses.get(schedule.id);
+function isForPreview(
+  schedule: ScheduleEntity,
+  scheduleStatusMap: ScheduleStatusMap,
+) {
+  const status = scheduleStatusMap.get(schedule.id);
   return (
     !schedule.completed &&
     ['due', 'upcoming', 'missed', 'paid'].includes(status!)
