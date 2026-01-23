@@ -1,50 +1,41 @@
 import { queryOptions } from '@tanstack/react-query';
 
+import { q } from 'loot-core/shared/query';
 import type { Query } from 'loot-core/shared/query';
-import {
-  getHasTransactionsQuery,
-  getStatus,
-  getStatusLabel,
-} from 'loot-core/shared/schedules';
+import { getHasTransactionsQuery, getStatus, getStatusLabel } from 'loot-core/shared/schedules';
+import type { ScheduleStatus, ScheduleStatusLabel } from 'loot-core/shared/schedules';
 import type {
-  ScheduleStatus,
-  ScheduleStatusLabel,
-} from 'loot-core/shared/schedules';
-import type { ScheduleEntity, TransactionEntity } from 'loot-core/types/models';
+  AccountEntity,
+  ScheduleEntity,
+  TransactionEntity,
+} from 'loot-core/types/models';
 
+import { accountFilter } from '@desktop-client/queries';
 import { aqlQuery } from '@desktop-client/queries/aqlQuery';
 
-export type ScheduleStatusMap = Map<ScheduleEntity['id'], ScheduleStatus>;
+export type ScheduleStatusLookup = Record<ScheduleEntity['id'], ScheduleStatus>;
 
-export type ScheduleStatusLabelMap = Map<
+export type ScheduleStatusLabelLookup = Record<
   ScheduleEntity['id'],
   ScheduleStatusLabel
 >;
 
-export type ScheduleData = ScheduleStatusData & {
-  schedules: readonly ScheduleEntity[];
-};
-
 export type ScheduleStatusData = {
-  scheduleStatusMap: ScheduleStatusMap;
-  scheduleStatusLabelMap: ScheduleStatusLabelMap;
+  statusLookup: ScheduleStatusLookup;
+  statusLabelLookup: ScheduleStatusLabelLookup;
 };
 
 type AqlOptions = {
   query?: Query;
-  statusOptions?: {
-    enabled: boolean;
-    upcomingLength: string;
-  };
 };
 
 export const scheduleQueries = {
   all: () => ['schedules'],
   lists: () => [...scheduleQueries.all(), 'lists'],
-  aql: ({ query, statusOptions }: AqlOptions) =>
-    queryOptions<ScheduleData>({
+  aql: ({ query }: AqlOptions) =>
+    queryOptions<ScheduleEntity[]>({
       queryKey: [...scheduleQueries.lists(), query],
-      queryFn: async ({ client }) => {
+      queryFn: async () => {
         if (!query) {
           // Shouldn't happen because of the enabled flag, but needed to satisfy TS
           throw new Error('No query provided.');
@@ -52,32 +43,10 @@ export const scheduleQueries = {
         const { data: schedules }: { data: ScheduleEntity[] } =
           await aqlQuery(query);
 
-        if (statusOptions?.enabled) {
-          const statuses = await client.ensureQueryData(
-            scheduleQueries.statuses({
-              schedules,
-              upcomingLength: statusOptions.upcomingLength,
-            }),
-          );
-          return {
-            schedules,
-            scheduleStatusMap: statuses.scheduleStatusMap,
-            scheduleStatusLabelMap: statuses.scheduleStatusLabelMap,
-          };
-        }
-
-        return {
-          schedules,
-          scheduleStatusMap: new Map(),
-          scheduleStatusLabelMap: new Map(),
-        };
+        return schedules;
       },
       enabled: !!query,
-      placeholderData: {
-        schedules: [],
-        scheduleStatusMap: new Map(),
-        scheduleStatusLabelMap: new Map(),
-      },
+      placeholderData: [],
     }),
   statuses: ({
     schedules,
@@ -96,7 +65,7 @@ export const scheduleQueries = {
           transactions.filter(Boolean).map(trans => trans.schedule),
         );
 
-        const scheduleStatusMap: ScheduleStatusMap = new Map(
+        const statusLookup: ScheduleStatusLookup = Object.fromEntries(
           schedules.map(s => [
             s.id,
             getStatus(
@@ -108,15 +77,40 @@ export const scheduleQueries = {
           ]),
         );
 
-        const scheduleStatusLabelMap: ScheduleStatusLabelMap = new Map(
-          [...scheduleStatusMap.keys()].map(key => [
+        const statusLabelLookup: ScheduleStatusLabelLookup = Object.fromEntries(
+          Object.keys(statusLookup).map(key => [
             key,
-            getStatusLabel(scheduleStatusMap.get(key) || ''),
+            getStatusLabel(statusLookup[key] || ''),
           ]),
         );
 
-        return { scheduleStatusMap, scheduleStatusLabelMap };
+        return { statusLookup, statusLabelLookup };
       },
       enabled: schedules.length > 0,
     }),
 };
+
+export function schedulesViewQuery(
+  view?: AccountEntity['id'] | 'onbudget' | 'offbudget' | 'uncategorized',
+) {
+  const filterByAccount = accountFilter(view, '_account');
+  const filterByPayee = accountFilter(view, '_payee.transfer_acct');
+
+  let query = q('schedules')
+    .select('*')
+    .filter({
+      $and: [{ '_account.closed': false }],
+    });
+
+  if (view) {
+    if (view === 'uncategorized') {
+      query = query.filter({ next_date: null });
+    } else {
+      query = query.filter({
+        $or: [filterByAccount, filterByPayee],
+      });
+    }
+  }
+
+  return query.orderBy({ next_date: 'desc' });
+}
