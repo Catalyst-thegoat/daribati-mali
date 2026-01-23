@@ -4,7 +4,11 @@ import type { CategoryEntity, ScheduleEntity } from 'loot-core/types/models';
 
 import { useCachedSchedules } from './useCachedSchedules';
 import { useFeatureFlag } from './useFeatureFlag';
-import type { ScheduleStatuses, ScheduleStatusLabels } from './useSchedules';
+
+import type {
+  ScheduleStatuses,
+  ScheduleStatusLabels,
+} from '@desktop-client/schedules';
 
 type ScheduleGoalDefinition = {
   type: 'schedule';
@@ -26,9 +30,11 @@ export function useCategoryScheduleGoalTemplates({
 }: UseCategoryScheduleGoalTemplatesProps): UseCategoryScheduleGoalTemplatesResult {
   const isGoalTemplatesEnabled = useFeatureFlag('goalTemplatesEnabled');
   const {
-    schedules: allSchedules,
-    statuses: allStatuses,
-    statusLabels: allStatusLabels,
+    data: {
+      schedules: allSchedules,
+      statuses: allStatuses,
+      labels: allStatusLabels,
+    },
   } = useCachedSchedules();
 
   return useMemo(() => {

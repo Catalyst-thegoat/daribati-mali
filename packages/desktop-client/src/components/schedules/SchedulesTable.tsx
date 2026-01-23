@@ -38,7 +38,7 @@ import { usePayees } from '@desktop-client/hooks/usePayees';
 import type {
   ScheduleStatuses,
   ScheduleStatusType,
-} from '@desktop-client/hooks/useSchedules';
+} from '@desktop-client/schedules';
 
 type SchedulesTableProps = {
   isLoading?: boolean;
@@ -46,7 +46,7 @@ type SchedulesTableProps = {
   statuses: ScheduleStatuses;
   filter: string;
   allowCompleted: boolean;
-  onSelect: (id: ScheduleEntity['id']) => void;
+  onSelect: (schedule: ScheduleEntity) => void;
   style: CSSProperties;
   tableStyle?: CSSProperties;
 } & (
@@ -208,11 +208,9 @@ function ScheduleRow({
   dateFormat,
 }: {
   schedule: ScheduleEntity;
+  statuses: ScheduleStatuses;
   dateFormat: string;
-} & Pick<
-  SchedulesTableProps,
-  'onSelect' | 'onAction' | 'minimal' | 'statuses'
->) {
+} & Pick<SchedulesTableProps, 'onSelect' | 'onAction' | 'minimal'>) {
   const { t } = useTranslation();
 
   const rowRef = useRef(null);
@@ -231,7 +229,7 @@ function ScheduleRow({
       ref={rowRef}
       height={ROW_HEIGHT}
       inset={15}
-      onClick={() => onSelect(schedule.id)}
+      onClick={() => onSelect(schedule)}
       style={{
         cursor: 'pointer',
         backgroundColor: theme.tableBackground,

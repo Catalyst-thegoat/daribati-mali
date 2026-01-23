@@ -10,8 +10,9 @@ import type { CategoryEntity, ScheduleEntity } from 'loot-core/types/models';
 
 import { useCategoryScheduleGoalTemplates } from './useCategoryScheduleGoalTemplates';
 import { useLocale } from './useLocale';
-import type { ScheduleStatusType } from './useSchedules';
 import { useSyncedPref } from './useSyncedPref';
+
+import type { ScheduleStatusType } from '@desktop-client/schedules';
 
 type UseCategoryScheduleGoalTemplateProps = {
   category: CategoryEntity;

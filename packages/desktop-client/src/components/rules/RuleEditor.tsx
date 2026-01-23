@@ -58,7 +58,6 @@ import { useDateFormat } from '@desktop-client/hooks/useDateFormat';
 import { useFeatureFlag } from '@desktop-client/hooks/useFeatureFlag';
 import { useFormat } from '@desktop-client/hooks/useFormat';
 import { useSchedules } from '@desktop-client/hooks/useSchedules';
-import type { ScheduleStatusType } from '@desktop-client/hooks/useSchedules';
 import {
   SelectedProvider,
   useSelected,
@@ -67,6 +66,7 @@ import { addNotification } from '@desktop-client/notifications/notificationsSlic
 import { getPayees } from '@desktop-client/payees/payeesSlice';
 import { aqlQuery } from '@desktop-client/queries/aqlQuery';
 import { useDispatch } from '@desktop-client/redux';
+import type { ScheduleStatusType } from '@desktop-client/schedules/queries';
 import { disableUndo, enableUndo } from '@desktop-client/undo';
 
 function updateValue(array, value, update) {
@@ -366,15 +366,10 @@ function ScheduleDescription({ id }) {
   const { isNarrowWidth } = useResponsive();
   const dateFormat = useDateFormat() || 'MM/dd/yyyy';
   const format = useFormat();
-  const scheduleQuery = useMemo(
-    () => q('schedules').filter({ id }).select('*'),
-    [id],
-  );
   const {
-    schedules,
-    statusLabels,
-    isLoading: isSchedulesLoading,
-  } = useSchedules({ query: scheduleQuery });
+    data: { schedules, labels: statusLabels } = {},
+    isFetching: isSchedulesLoading,
+  } = useSchedules({ query: q('schedules').filter({ id }).select('*') });
 
   if (isSchedulesLoading) {
     return null;
