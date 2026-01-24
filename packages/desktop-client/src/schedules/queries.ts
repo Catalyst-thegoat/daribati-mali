@@ -2,8 +2,15 @@ import { queryOptions } from '@tanstack/react-query';
 
 import { q } from 'loot-core/shared/query';
 import type { Query } from 'loot-core/shared/query';
-import { getHasTransactionsQuery, getStatus, getStatusLabel } from 'loot-core/shared/schedules';
-import type { ScheduleStatus, ScheduleStatusLabel } from 'loot-core/shared/schedules';
+import {
+  getHasTransactionsQuery,
+  getStatus,
+  getStatusLabel,
+} from 'loot-core/shared/schedules';
+import type {
+  ScheduleStatus,
+  ScheduleStatusLabel,
+} from 'loot-core/shared/schedules';
 import type {
   AccountEntity,
   ScheduleEntity,
