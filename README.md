@@ -1,83 +1,221 @@
-<p align="center">
-  <img src="/demo.png" alt="Actualbudget" />
-</p>
+# 💰🇲🇦 Daribati Mali - إدارة المال المغربية
 
-## Getting Started
+<div align="center">
 
-Actual is a local-first personal finance tool. It is 100% free and open-source, written in NodeJS, it has a synchronization element so that all your changes can move between devices without any heavy lifting.
+![Daribati Mali](https://daribati-mali.com/logo.svg)
 
-If you are interested in contributing, or want to know how development works, see our [contributing](https://actualbudget.org/docs/contributing/) document we would love to have you.
+**تطبيق إدارة المال الشخصي المغربي**
 
-Want to say thanks? Click the ⭐ at the top of the page.
+**Personal Finance Management for Morocco**
 
-## Key Links
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Forked from Actual Budget](https://img.shields.io/badge/Forked%20from-Actual%20Budget-25k%20stars-orange)
 
-- Actual [discord](https://discord.gg/pRYNYr4W5A) community.
-- Actual [Community Documentation](https://actualbudget.org/docs)
-- [Frequently asked questions](https://actualbudget.org/docs/faq)
+**المحلي أولاً** | **خصوصية تامة** | **دعم عربي كامل** | **درهم مغربي**
 
-## Installation
+[الموقع](https://daribati-mali.com) • [GitHub](https://github.com/Catalyst-thegoat/daribati-mali) • [تواصل](https://t.me/daribati-mali)
 
-There are four ways to deploy Actual:
+</div>
 
-1. One-click deployment [via PikaPods](https://www.pikapods.com/pods?run=actual) (~1.40 $/month) - recommended for non-technical users
-1. Managed hosting [via Fly.io](https://actualbudget.org/docs/install/fly) (~1.50 $/month)
-1. Self-hosted by using [a Docker image](https://actualbudget.org/docs/install/docker)
-1. Local-only apps - [downloadable Windows, Mac and Linux apps](https://actualbudget.org/download/) you can run on your device
+---
 
-Learn more in the [installation instructions docs](https://actualbudget.org/docs/install/).
+## 🎯 حول Daribati Mali
 
-## Ready to Start Budgeting?
+**Daribati Mali** (درهم مالي) هو تطبيق متكامل لإدارة المال الشخصي مصمم خصيصاً للمغاربة. يدعم اللغة العربية بالكامل مع واجهة سهلة الاستخدام.
 
-Read about [Envelope budgeting](https://actualbudget.org/docs/getting-started/envelope-budgeting) to know more about the idea behind Actual Budget.
+مبني على [Actual Budget](https://github.com/actualbudget/actual) (25,000+ نجمة).
 
-### Are you new to budgeting or want to start fresh?
+### 🇲🇦 مميزات مغربية
 
-Check out the community's [Starting Fresh](https://actualbudget.org/docs/getting-started/starting-fresh) guide so you can quickly get up and running!
+| الميزة | الوصف |
+|--------|-------|
+| **الدرهم المغربي** | دعم كامل للعملة المحلية (MAD/DHS) |
+| **العربية** | واجهة عربية كاملة مع دعم RTL |
+| **الفرنسية** | دعم ثنائي العربية والفرنسية |
+| **الأرقام المغربية** | تنسيق أرقام مغربي (1.234,56) |
+| **البنوك المغربية** | قوالب لتصدير البنوك المحلية |
+| **الزكاة** | حساب تلقائي للزكاة |
 
-### Are you migrating from other budgeting apps?
+---
 
-Check out the community's [Migration](https://actualbudget.org/docs/migration/) guide to start jumping on the Actual Budget train!
+## ✨ المميزات الرئيسية
 
-## Documentation
+### 💵 إدارة الميزانية
+- **طريقة الظرف** -Envelope Budgeting
+- **تتبع الدخل والمصروفات**
+- **ميزانيات شهرية وسنوية**
+- **تنبيهات للإنفاق**
 
-We have a wide range of documentation on how to use Actual, this is all available in our [Community Documentation](https://actualbudget.org/docs), this includes topics on Budgeting, Account Management, Tips & Tricks and some documentation for developers.
+### 📊 التقارير
+- **رسوم بيانية للمصروفات**
+- **مقارنة بين الأشهر**
+- **تصدير PDF وCSV**
+- **تقارير الزكاة**
 
-## Contributing
+### 🔒 الخصوصية
+- **بيانات محلية 100%**
+- **لا خوادم خارجية**
+- **تشفير البيانات**
+- **نسخ احتياطي سحابي اختياري**
 
-Actual is a community driven product. Learn more about [contributing to Actual](https://actualbudget.org/docs/contributing/).
+### 🌐 دعم متعدد اللغات
+- 🇲🇦 العربية (RTL)
+- 🇫🇷 الفرنسية
+- 🇬🇧 الإنجليزية
 
-### Code structure
+---
 
-The Actual app is split up into a few packages:
+## 🚀 البدء السريع
 
-- loot-core - The core application that runs on any platform
-- desktop-client - The desktop UI
-- desktop-electron - The desktop app
+### المتطلبات
+- Node.js 18+
+- npm 8+ أو Yarn
 
-More information on the project structure is available in our [community documentation](https://actualbudget.org/docs/contributing/project-details).
+### التثبيت
 
-### Feature Requests
+```bash
+# استنساخ المشروع
+git clone https://github.com/Catalyst-thegoat/daribati-mali.git
+cd daribati-mali
 
-Current feature requests can be seen [here](https://github.com/actualbudget/actual/issues?q=is%3Aissue+label%3A%22needs+votes%22+sort%3Areactions-%2B1-desc).
-Vote for your favorite requests by reacting :+1: to the top comment of the request.
+# تثبيت зависимости
+npm install
 
-To add new feature requests, open a new Issue of the "Feature Request" type.
+# تشغيل وضع التطوير
+npm run dev
+```
 
-### Translation
+### البناء للإنتاج
 
-Make Actual Budget accessible to more people by helping with the [Internationalization](https://actualbudget.org/docs/contributing/i18n/) of Actual. We are using a crowd sourcing tool to manage the translations, see our [Weblate Project](https://hosted.weblate.org/projects/actualbudget/). Weblate proudly supports open-source software projects through their [Libre plan](https://weblate.org/en/hosting/#libre).
+```bash
+npm run build
+```
 
-<a href="https://hosted.weblate.org/engage/actualbudget/">
-<img src="https://hosted.weblate.org/widget/actualbudget/actual/287x66-grey.png" alt="Translation status" />
-</a>
+---
 
-## Repo Activity
+## 📁 هيكل المشروع
 
-![Alt](https://repobeats.axiom.co/api/embed/e20537dd8b74956f86736726ccfbc6f0565bec22.svg 'Repobeats analytics image')
+```
+daribati-mali/
+├── packages/
+│   ├── loot-core/         # Core application logic
+│   ├── crdt/              # Conflict-free replicated data types
+│   ├── sync-server/       # Sync server
+│   ├── desktop-electron/  # Desktop app
+│   └── web/               # Web interface
+├── scripts/               # Build scripts
+├── README.md              # This file
+└── LICENSE                # MIT License
+```
 
-## Sponsors
+---
 
-Thanks to our wonderful sponsors who make Actual Budget possible!
+## 🛠️ التقنيات المستخدمة
 
-<a href="https://www.netlify.com"> <img src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg" alt="Deploys by Netlify" /> </a>
+| الطبقة | التقنية |
+|--------|---------|
+| **Frontend** | React 18 + TypeScript |
+| **Backend** | Node.js + Express |
+| **Database** | SQLite + IndexedDB |
+| **State** | Redux + CRDT |
+| **Sync** | WebSocket + CRDT |
+| **Build** | Vite + Rollup |
+| **Desktop** | Electron |
+
+---
+
+## 💰 خطط الاشتراك (SaaS)
+
+| الميزة | مجاني | برو | أعمال |
+|--------|-------|-----|-------|
+| **السعر** | 0 درهم | 49 درهم/شهر | 149 درهم/شهر |
+| **الميزانيات** | 5 | غير محدود | غير محدود |
+| **الحسابات** | 3 | غير محدود | غير محدود |
+| **مزامنة سحابية** | ❌ | 1GB | 10GB |
+| **تصدير التقارير** | PDF | PDF + CSV | PDF + CSV + Excel |
+| **دعم** | مجتمع | بريد | 24/7 |
+
+---
+
+## 🌍 الترجمات
+
+| اللغة | الحالة | RTL |
+|-------|--------|-----|
+| 🇲🇦 العربية | ✅ كاملة | ✅ نعم |
+| 🇫🇷 الفرنسية | ✅ كاملة | ❌ لا |
+| 🇬🇧 الإنجليزية | ✅ كاملة | ❌ لا |
+
+---
+
+## 🔧 الإعداد للبنوك المغربية
+
+### تصدير للبنوك المحلية:
+
+```javascript
+// مثال: تكوين تصدير CI Bank
+const bankConfig = {
+  ci: {
+    format: 'csv',
+    encoding: 'UTF-8',
+    dateFormat: 'DD/MM/YYYY',
+    columns: ['date', 'description', 'amount', 'balance']
+  }
+};
+```
+
+---
+
+## 📱 تطبيقات سطح المكتب
+
+| النظام | التحميل |
+|--------|---------|
+| **Windows** | [Daribati-Mali-Setup.exe](https://daribati-mali.com/download) |
+| **macOS** | [Daribati-Mali.dmg](https://daribati-mali.com/download) |
+| **Linux** | [Daribati-Mali.deb](https://daribati-mali.com/download) |
+
+---
+
+## 🤝 المساهمة
+
+نرحب بمساهماتكم! اقرأوا [CONTRIBUTING.md](CONTRIBUTING.md) للمزيد.
+
+### طرق المساهمة:
+- 🐛 الإبلاغ عن الأخطاء
+- 💡 اقتراح ميزات جديدة
+- 🔧 كتابة كود
+- 🌍 الترجمة للغات أخرى
+- 📝 تحسين التوثيق
+
+---
+
+## 📄 الترخيص
+
+MIT License - راجع [LICENSE](LICENSE) للمزيد.
+
+---
+
+## 🙏 شكر وتقدير
+
+- **فريق Actual Budget** - لإنشاء هذا المشروع الرائع
+- **المجتمع المفتوح المصدر** - للدعم المستمر
+- **المستخدمون المغاربة** - لإلهام هذا المشروع
+
+---
+
+## 📞 التواصل
+
+- **البريد:** support@daribati-mali.com
+- **الموقع:** https://daribati-mali.com
+- **تلغرام:** https://t.me/daribati-mali
+
+---
+
+<div align="center">
+
+**صُنع بحب للمغاربة** 🇲🇦
+
+**Made with love for Moroccans**
+
+[⭐ نجوم على GitHub](https://github.com/Catalyst-thegoat/daribati-mali) | [تابعنا](https://twitter.com/daribati-mali)
+
+</div>
